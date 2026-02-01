@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@300;400;500;600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #ff5d8f; 
+            --secondary-color: #ff0a54; 
+            --accent-yellow: #ffbe0b; 
+            --bg-gradient: linear-gradient(135deg, #fff0f5 0%, #ffe3e3 100%);
+            --text-main: #4a2040;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Pacifico', cursive;
+            color: var(--secondary-color);
+        }
+
+        /* --- CSS ANIMATIONS (Replacing JS) --- */
+        
+        /* Mascot Wiggle */
+        .floating-mascot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 90px;
+            height: auto;
+            z-index: 100;
+            pointer-events: none; 
+            animation: wiggle 2s infinite ease-in-out;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        /* Proposal GIF */
+        .proposal-gif {
+            width: 200px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background-image: radial-gradient(var(--glass-bg) 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+
+        /* CSS Typewriter Effect */
+        .typewriter-text {
+            display: inline-block;
+            overflow: hidden; /* Ensures the content is not revealed until the animation */
+            border-right: .15em solid var(--secondary-color); /* The typwriter cursor */
+            white-space: nowrap; /* Keeps the content on a single line */
+            margin: 0 auto 20px auto; /* Gives that scrolling effect as the typing happens */
+            font-size: 3rem; /* Adjusted for mobile fit */
+            letter-spacing: .05em; /* Adjust as needed */
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+
+        /* The typing effect */
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        /* The typewriter cursor effect */
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--secondary-color); }
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            color: #666;
+            margin-bottom: 40px;
+            max-width: 600px;
+            opacity: 0;
+            animation: fadeIn 1s 3.5s forwards; /* Delay until typing done */
+        }
+        
+        @keyframes fadeIn { to { opacity: 1; } }
+
+        /* Button as Link */
+        .btn-scroll {
+            display: inline-block;
+            text-decoration: none;
+            padding: 15px 40px;
+            background: var(--secondary-color);
+            color: white;
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 600;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 0 #c90035;
+            transition: all 0.1s;
+        }
+
+        .btn-scroll:active {
+            transform: translateY(5px);
+            box-shadow: none;
+        }
+
+        /* --- Sections --- */
+        section {
+            min-height: 80vh;
+            padding: 80px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 3.5rem;
+            margin-bottom: 60px;
+            transform: rotate(-3deg);
+            display: inline-block;
+            background: var(--accent-yellow);
+            color: var(--secondary-color);
+            padding: 10px 30px;
+            border-radius: 5px;
+            box-shadow: 5px 5px 0 rgba(0,0,0,0.1);
+        }
+
+        /* --- Timeline (Pure CSS) --- */
+        .timeline {
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0; bottom: 0;
+            width: 4px;
+            background: #ddd;
+            border-radius: 2px;
+            transform: translateX(-50%);
+        }
+
+        .story-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 80px;
+            width: 100%;
+        }
+
+        .story-content {
+            width: 45%;
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 8px 8px 0 rgba(0,0,0,0.05);
+            border: 2px solid #eee;
+            position: relative;
+            text-align: center;
+        }
+        
+        .story-content::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 0; height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            transform: translateY(-50%);
+        }
+
+        .story-item:nth-child(odd) .story-content { margin-right: auto; }
+        .story-item:nth-child(odd) .story-content::after { right: -12px; border-left: 12px solid #eee; }
+        
+        .story-item:nth-child(even) { flex-direction: row-reverse; }
+        .story-item:nth-child(even) .story-content { margin-left: auto; }
+        .story-item:nth-child(even) .story-content::after { left: -12px; border-right: 12px solid #eee; }
+
+        .story-emoji {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 10px;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* --- Gallery --- */
+        .gallery-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px 15px 50px 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            width: 280px;
+            transform: rotate(var(--rot));
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+        }
+        
+        .polaroid::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background: rgba(255, 230, 0, 0.5);
+            z-index: 10;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.1) rotate(0deg) !important;
+            z-index: 10;
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+
+        .polaroid p {
+            font-family: 'Fredoka', sans-serif;
+            margin-top: 15px;
+            color: #555;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* --- Proposal Section --- */
+        .proposal-section {
+            background: #fff;
+            background-image: radial-gradient(#ff5d8f 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+
+        .big-question {
+            font-size: 4rem;
+            color: var(--secondary-color);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .buttons-container {
+            position: relative;
+            height: 150px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        /* CSS "Yes" Button */
+        .btn-yes {
+            display: inline-block;
+            text-decoration: none;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background: #2ec4b6;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 0 #1b8a7f;
+            transition: transform 0.1s;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .btn-yes:active {
+            transform: translateY(8px);
+            box-shadow: none;
+        }
+
+        /* CSS "No" Button - The Dodge Trick */
+        .btn-no {
+            display: inline-block;
+            padding: 20px 50px;
+            font-size: 1.5rem;
+            background: #ff9f1c;
+            color: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 0 #cc7a00;
+            font-family: 'Fredoka', sans-serif;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Removed the opacity/transform hover effects so it stays visible while moving */
+        
+        /* Backup text that appears underneath when button leaves */
+        .buttons-container::after {
+            content: "Oops! 💨";
+            position: absolute;
+            right: 35%; 
+            color: #aaa;
+            font-size: 1.2rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .buttons-container:hover::after {
+            opacity: 1;
+        }
+
+        /* --- Audio Player (Pure HTML) --- */
+        .music-wrapper {
+            position: fixed;
+            top: 20px; right: 20px;
+            z-index: 1000;
+            background: white;
+            padding: 10px;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid var(--primary-color);
+        }
+        
+        audio {
+            height: 30px;
+        }
+
+        /* --- Celebration (CSS Target Hack) --- */
+        .celebration-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255,255,255,0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            
+            /* Hidden by default */
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            
+            /* Background confetti effect */
+            background-image: url('https://media.tenor.com/2K1lU621qQAAAAAj/confetti.gif');
+            background-size: cover;
+        }
+        
+        /* This triggers when the URL ends in #celebration */
+        #celebration:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .celebration-gif {
+            width: 300px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(255, 10, 84, 0.3);
+            margin-bottom: 20px;
+            background: white; /* To hide confetti behind it */
+        }
+        
+        .close-btn {
+            margin-top: 20px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; white-space: normal; border: none; animation: none; }
+            .typewriter-text { white-space: normal; border: none; animation: none; }
+            .buttons-container { flex-direction: column; }
+            .btn-no:hover { transform: scale(0.8) translateY(100px); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Pure HTML Audio Player -->
+    <div class="music-wrapper">
+        <audio controls loop>
+            <source src="Kashmir Main, Tu Kanyakumari Chennai Express 320 Kbps.mp3" type="audio/mp3">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="typewriter-text">
+            Hey there my cheese loving girlfriend! 👋
+        </div>
+        <p>Warning: Extreme levels of cheesiness ahead. Proceed with caution. 🧀</p>
+        <a href="#story" class="btn-scroll">Let's Go! 🚀</a>
+    </section>
+
+    <!-- Fun Story Timeline -->
+    <section id="story">
+        <h2 class="section-title">The "Us" Lore</h2>
+        <div class="timeline">
+            <div class="story-item">
+                <div class="story-content">
+                    <span class="story-emoji">👀</span>
+                    <h3>The Encounter</h3>
+                    <p>We met. I saw you. I did something so stupid like looking at ants and talking to you, well i was very shy okay??</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-content">
+                    <span class="story-emoji">⚡</span>
+                    <h3>The "Oh Snap" Moment</h3>
+                    <p>That I got to know that you used to stalk me soo much made me feel like a celebraity uk never had that feeling ma, i love you !!!!.</p>
+                </div>
+            </div>
+            <div class="story-item">
+                <div class="story-content">
+                    <span class="story-emoji">🔒</span>
+                    <h3>The Trap is Set</h3>
+                    <p>Now you're my best friend and my favorite wifeeyy and girlfriend, No escaping from me now WAHAHAHAHAHAAHAHAHA</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery -->
+    <section id="gallery">
+        <h2 class="section-title">Proof We Are Cute</h2>
+        <div class="gallery-grid">
+            <div class="polaroid" style="--rot: -3deg">
+                <img src="IMG-20251209-WA0039.jpg" alt="Laughing">
+                <p>Our first Moive 🥺</p>
+            </div>
+            <div class="polaroid" style="--rot: 2deg">
+                <img src="IMG-20250215-WA0003.jpg" alt="Selfie">
+                <p>Our first Valentines Day 💕</p>
+            </div>
+            <div class="polaroid" style="--rot: -2deg">
+                <img src="WhatsApp Image 2026-02-02 at 12.27.27 AM.jpeg" alt="Date">
+                <p> Our First Food date! 🍔</p>
+            </div>
+            <div class="polaroid" style="--rot: 3deg">
+                <img src="WhatsApp Image 2026-02-02 at 12.40.55 AM.jpeg" alt="Together">
+                <p>Our first trip ✈️ ✨</p>
+            </div>
+            <div class="polaroid" style="--rot: -1deg">
+                <img src="WhatsApp Image 2026-02-02 at 12.27.43 AM.jpeg" alt="Silly">
+                <p>Being goofy 🤪</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- The Prank Proposal -->
+    <section id="proposal" class="proposal-section">
+        <img src="cat-begging.gif" alt="Please" class="proposal-gif">
+        
+        <p style="font-size: 1.5rem; margin-bottom: 10px;">I have a very serious question...</p>
+        <h1 class="big-question">Will you be my Valentine?</h1>
+        
+        <div class="buttons-container">
+            <!-- Link to ID triggers the :target CSS -->
+            <a href="#celebration" class="btn-yes">YES! 😍</a>
+            
+            <!-- Updated Button with JavaScript events -->
+            <button id="no-btn" class="btn-no" onmouseover="moveButton()" onclick="moveButton()">No 🙅‍♂️</button>
+        </div>
+    </section>
+
+    <!-- Celebration Screen (Activated via #celebration URL fragment) -->
+    <div id="celebration" class="celebration-overlay">
+        <img src="yay-kitty.gif" alt="Yay" class="celebration-gif">
+        <h1 style="font-size: 3rem; color: #ff0a54;">I KNEW IT! 🎉</h1>
+        <p style="font-size: 1.5rem; color: #555; background: white; padding: 5px;">(As if you had a choice lol)</p>
+        <p style="margin-top: 20px; background: white;">See you soon! ❤️</p>
+        
+        <a href="#proposal" class="close-btn">Close</a>
+    </div>
+
+    <!-- Dancing Cat Mascot -->
+    <img src="https://media.tenor.com/fTp5s87s048AAAAj/mochi-cat-dance.gif" alt="Dance" class="floating-mascot">
+
+    <script>
+        function moveButton() {
+            var btn = document.getElementById('no-btn');
+            
+            // Switch to fixed positioning so it can go anywhere on screen
+            btn.style.position = 'fixed';
+            
+            // Calculate random positions within the visible viewport
+            // Subtract button size (approx 150px width, 60px height) to keep it on screen
+            var newX = Math.random() * (window.innerWidth - 150);
+            var newY = Math.random() * (window.innerHeight - 60);
+            
+            // Apply new coordinates
+            btn.style.left = newX + 'px';
+            btn.style.top = newY + 'px';
+        }
+    </script>
+</body>
+</html>
